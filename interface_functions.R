@@ -359,8 +359,8 @@ modify_inp <- function(GI_plan, inp, routing_interface_path = NULL){
     inp
   }
   
-  if (length(names(GI_plan)) > 7){
-    side_plan <- GI_plan[,c(-1:-2, -4:-7)]
+  if (length(names(GI_plan)) > 6){
+    side_plan <- GI_plan[,c(-1:-2, -4:-6)]
     
     inp <- adjust_other_variable(side_plan, inp)
   }
