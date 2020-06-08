@@ -1,0 +1,12 @@
+---
+title: "About"
+
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'about.html'))})
+
+---
+
+The theory behind the toolbox can be found in the paper, *"Incorporating External Green Infrastructure Models into Storm Water Management Model (SWMM) Simulations Using Interface Files"*. Any questions, comments, and suggestions are welcomed.

@@ -1,0 +1,2 @@
+inflow_path,outlet,subcatchment_name,per_area_rep,imp_area_rep,width_adj
+./example/example1/GR_outflow.txt,0,S1,0,0.25,115

@@ -1,0 +1,16 @@
+name: "SWMM-GI coupling tool"
+output_dir: "docs"
+navbar:
+  title: "SWMM-GI coupling tool"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Exampe 1"
+      href: example1.html
+    - text: "Exampe 2"
+      href: example2.html
+    - text: "Exampe 3"
+      href: example3.html
+    - text: "About"
+      href: about.html
+    

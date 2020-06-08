@@ -1,0 +1,21 @@
+---
+title: "Documentation of the toolbox for coupling SWMM and other green infrastructure models"
+
+knit: (function(input_file, encoding) {
+  out_dir <- 'docs';
+  rmarkdown::render(input_file,
+ encoding=encoding,
+ output_file=file.path(dirname(input_file), out_dir, 'index.html'))})
+---
+
+The functions contained in *interface_function.R* can be used to couple the United States Environmental Protection Agency (EPA)'s [Storm Water Management Model (SWMM)](https://www.epa.gov/water-research/storm-water-management-model-swmm) and other green infrastructure (GI) models. This document demonstrates how these functions can be used through a few examples.
+
+This document is written in [R Markdown](https://rmarkdown.rstudio.com/) format. The [R version 3.6.3](https://www.r-project.org/) was used for the experiments. The packages used by the toolbox are [tidyverse](https://www.tidyverse.org/), [lubridate](https://lubridate.tidyverse.org/), and [swwmr](https://github.com/dleutnant/swmmr), which can be easily installed using the `install.packages` function.
+
+The code chunk below load the functions in the toolbox. At the same time, the required package are automatically installed (if unavailable) and loaded using the [pacman](https://cran.r-project.org/web/packages/pacman/pacman.pdf) package.
+```{r eval=FALSE}
+source("interface_functions.R")
+```
+
+To follow the examples, SWMM needs to be installed. It can be downloaded for free from this [link](https://www.epa.gov/water-research/storm-water-management-model-swmm). The source code can be found in the *example.Rmd* file, and the data can be found in the *example* folder. The experiments were conducted on the Microsoft Windows 10 operating system, and SWMM build 5.1.014 was used.
+
