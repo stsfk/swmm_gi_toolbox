@@ -303,9 +303,147 @@ $(document).ready(function () {
 </div>
 
 
-<div id="example-3" class="section level2">
-<h2>Example 3</h2>
-<p>In this example, the</p>
+<div id="example-3-adjusting-subcatchment-paramters-after-installing-gis" class="section level2">
+<h2>Example 3 Adjusting subcatchment paramters after installing GIs</h2>
+<div id="overview" class="section level3">
+<h3>1. Overview</h3>
+<p>In this example, the function to modify subcatchment paramters after modeling GIs externally is explored. Additional changes to the catchment can be passed to the <code>modify_inp</code> function through the <em>GI_plan</em> variable, where tibble columns with names in the format <em>section_variable</em> are defined. The <em>“section”</em> term corresponds to the name of the tab used in swmm input files, such as the <em>INFILTRATION</em> tab, the the infiltration parameters are store under this tab. The <em>“variable”</em> term corresponds to the name of the variable, e.g., <em>“MaxRate”</em> corresponds to the maximum infiltration rate. Thus, the column can be named as <em>“INFILTRATION_MaxRate”</em>, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the <em>inflow_path</em> column (see example 1 for more explanations).</p>
+<p>The goal of this example is to show the consequences of changing subcatchment width after modeling bioretention cells and their controlled areas externally.</p>
+<p>The catchment studied in this example is the same as in example 2. It has three subcatchments, as shown in the figure below.</p>
+<pre class="r"><code># Load toolbox functions
+source(&quot;interface_functions.R&quot;)
+
+inp &lt;- read_inp(&quot;./example/example3/raw_catchment.inp&quot;)
+
+# Functions provided in swmmr are used for visulization
+sub_sf &lt;- subcatchments_to_sf(inp)
+lin_sf &lt;- links_to_sf(inp)
+jun_sf &lt;- junctions_to_sf(inp)
+rg_sf &lt;- raingages_to_sf(inp)
+
+lab_coord &lt;- sub_sf %&gt;% 
+  sf::st_centroid() %&gt;%
+  sf::st_coordinates() %&gt;% 
+  tibble::as_tibble()
+
+lab_rg_coord &lt;- rg_sf %&gt;% 
+  {sf::st_coordinates(.) + 500} %&gt;% # add offset
+  tibble::as_tibble()
+
+sub_sf &lt;- dplyr::bind_cols(sub_sf, lab_coord)
+rg_sf &lt;- dplyr::bind_cols(rg_sf, lab_rg_coord)
+
+ggplot() + 
+  # first plot the subcatchment and colour continously by Area
+  geom_sf(data = sub_sf, aes(fill = Perc_Imperv), color = &quot;black&quot;, alpha = 0.8) + 
+  scale_fill_gradient(low = &quot;lightgreen&quot;, high = &quot;indianred4&quot;) +
+  geom_sf(data = lin_sf, colour = &quot;blue&quot;, size = 1) +
+  geom_sf(data = jun_sf, colour = &quot;grey20&quot;, size = 2) +
+  geom_label(data = sub_sf, aes(X, Y, label = Name), size = 3) +
+  labs(x = &quot;x-axis&quot;,
+       y = &quot;y-axis&quot;,
+       fill = &quot;Imperviousness\n(%)&quot;) +
+  scale_fill_gradient(limits = c(0,100), low = &quot;#009E73&quot;, high = &quot;#D16103&quot;) +
+  theme_bw(base_size = 10)</code></pre>
+<p><img src="example3_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+</div>
+<div id="evaluate-the-consequences-of-changing-subcatchment-width-and-mannings-n-after-modeling-bioretention-cells-exterally." class="section level3">
+<h3>2. Evaluate the consequences of changing subcatchment width and Manning’s n after modeling bioretention cells exterally.</h3>
+<p>Three units of bioretention cells are assumed to be implemented in each subcatchments. The design option 2 is used, which corresponds to the outflow hydrograph stored in file <em>bc2_outflow.txt</em>. More details on bioretention cell designs can be found in example 2.</p>
+<p>The following code chunk creates multiple tibbles stored in a list. Each tibble correspond to a bioretention cell modeling scenario, and for each scenario the subcatchment width of the subcatchments is set to a random value between 30 and 500, and Manning’s n of the impervious areas of the subcatchment is set to a random value between 0.01 and 0.02. Manning’s n is a measure of surface roughness. Multiple random scenarios are evaluated to assess the consequences of changing these parameters. The information on catchment width is provide in the <em>width_adj</em> column, and on Manning’s n is provided in the <em>SUBAREAS_N-Imperv</em> column.</p>
+<pre class="r"><code>set.seed(10)
+
+inflow_path &lt;- paste0(&quot;./example/example3/bc&quot;, 2, &quot;_outflow.txt&quot;)
+
+N = 50 # Number of scenarios
+gi_plans &lt;- vector(&quot;list&quot;, 10) # list storing the random GI install plan
+for (i in 1:N){
+  gi_plans[[i]] &lt;- tibble(
+    inflow_path = rep(inflow_path, 9),
+    outlet = rep(0, 9),
+    subcatchment_name = rep(c(&quot;S1&quot;, &quot;S2&quot;, &quot;S3&quot;), each = 3),
+    per_area_rep = rep(0, 9),
+    imp_area_rep = rep(0.1, 9),
+    width_adj = rep(runif(3, min = 30, max = 500), each = 3),
+    `SUBAREAS_N-Imperv` = rep(runif(3, min = 0.01, max = 0.02), each = 3)
+  )
+}</code></pre>
+<p>The scenarios are evlauted usuing the <code>write_routing_interface_file</code> and <code>modify_inp</code> functions provided by the toolbox and the swmmr functions.</p>
+<pre class="r"><code>read_outflow &lt;- function(fpath = &quot;outflow.txt&quot;){
+  # Purpose: read simulated outflow hydrograph
+  # Input: 
+  #    fpath = file path of the simulated outflow, which is defined in the [FILES] tabe in SWMM input file
+  # Output:
+  #    a tibble stores the outflow hydrograph
+  
+  read_table(fpath, skip = 7) %&gt;%
+    transmute(datetime = ymd_hms(paste(Year, Mon, Day, Hr, Min, Sec)),
+            flow = FLOW) %&gt;%
+    arrange(datetime)
+}
+
+# Read the SWMM input file for the original subcatchment
+inp &lt;- read_inp(&quot;./example/example3/raw_catchment.inp&quot;)
+
+# Create a list to store the simulated outflow hydrographs
+outflows &lt;- vector(&quot;list&quot;, N)
+for (i in 1:N){
+  
+  # create a routing interface file
+  gi_plan &lt;- gi_plans[[i]]
+  routing_interface_path &lt;- &quot;./example/example3/routing_interface.txt&quot;
+  write_routing_interface_file(
+    GI_plan = gi_plan, 
+    inp = inp, 
+    routing_interface_path = routing_interface_path
+  )
+  
+  # modify the object associated with swmm input file
+  new_inp &lt;- modify_inp(
+    GI_plan = gi_plan, 
+    inp = inp, 
+    routing_interface_path = routing_interface_path
+  )
+  
+  # write the new SWMM input file
+  new_inp_path &lt;- &quot;./example/example3/test.inp&quot;
+  write_inp(new_inp, file = new_inp_path)
+  
+  # run simulation
+  run_swmm(new_inp_path)
+  
+  # get simulated outflow hydrograph
+  outflows[[i]] &lt;- read_outflow() %&gt;%
+    mutate(case = i)
+}
+
+# join the simulated hydrograph into a single tibble
+outflows &lt;- outflows %&gt;%
+  bind_rows()</code></pre>
+</div>
+<div id="assessment-results" class="section level3">
+<h3>3. Assessment results</h3>
+<p>The following code generates a figure comparing the hydrographs generated in each scenario. The grey lines correspond to the results for each scenario, and the blue line shows the mean values. Considerable varations between different hydrographs can be observed, especially in the predicted peak flows.</p>
+<pre class="r"><code># Keep data for relatively high flow periods
+data_plot &lt;- outflows %&gt;%
+  filter(datetime &lt;= ymd_hm(&quot;2020-06-02 00:00&quot;))
+
+# Get the mean hydrograph of all the scenarios
+data_plot2 &lt;- outflows %&gt;%
+  filter(datetime &lt;= ymd_hm(&quot;2020-06-02 00:00&quot;)) %&gt;%
+  group_by(datetime) %&gt;%
+  mutate(mean_flow = mean(flow)) %&gt;%
+  ungroup()
+
+# Ploting
+ggplot() +
+  geom_line(data = data_plot, aes(datetime, flow, group = case), color = &quot;grey50&quot;, size = 0.5) +
+  geom_line(data = data_plot2, aes(datetime, mean_flow), color = &quot;blue&quot;, size = 0.8) +
+  labs(x = &quot;Time&quot;,
+       y = &quot;Flow rate [CFS]&quot;) +
+  theme_bw()</code></pre>
+<p><img src="example3_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
 </div>
 
 
