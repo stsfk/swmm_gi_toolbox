@@ -306,18 +306,18 @@ $(document).ready(function () {
 </div>
 
 
-<div id="example-1-model-green-roofs-interally-and-externally-using-swmm" class="section level2">
-<h2>Example 1 Model green roofs interally and externally using SWMM</h2>
-<p>In this example, the hydrological performance of green roofs in a simple catchment is examined. The green roofs are first modeled externally using the SWMM’s green roof module, and then the resulted hydrograph is coupled with the SWMM catchment model using the functions provided by the toolbox. The result is then compared to that obtained by modeling green roofs internally using SWMM. The results of two cases are expected to be the same, as the toolbox is designed to update the parameters to accommodate the external modeling of green roofs and the same green roof model is used in both cases. The simulations are driven by a 60 mm SCS type III 24-hr design storm.</p>
+<div id="example-1-model-green-roofs-internally-and-externally-using-swmm" class="section level2">
+<h2>Example 1 Model green roofs internally and externally using SWMM</h2>
+<p>In this example, the hydrological performance of green roofs in a simple urban catchment is examined. The green roofs are first modeled externally using the SWMM’s green roof module, and then the resulted hydrograph is coupled with the SWMM catchment model using the functions provided by the toolbox. The result is then compared to that obtained by modeling green roofs internally using SWMM. The results of two cases are expected to be the same, as the toolbox is designed to update the parameters to accommodate the external modeling of green roofs and the same green roof model is used in both cases. The simulations are driven by a 60 mm SCS type III 24-hr design storm.</p>
 <div id="original-catchment-without-green-roofs" class="section level3">
 <h3>1. Original catchment without green roofs</h3>
-<p>The paramater of the original subcatchment before installing green roofs is stored in <em>raw_catchment.inp</em>. The modeled catchment only has a 0.5 acre impervious catchemnt, which drains runoffs from the catchment to the out. The catchment can be ploted by executing the code chunk that uses functions provided by swmmr.</p>
+<p>The parameter of the original subcatchment before installing green roofs is stored in <em>raw_catchment.inp</em>. The modeled catchment only has a 0.5-acre impervious catchment, which drains runoffs from the catchment to the out. The catchment can be plotted by executing the code chunk that uses functions provided by swmmr.</p>
 <pre class="r"><code># Load toolbox functions
 source(&quot;interface_functions.R&quot;)
 
 inp &lt;- read_inp(&quot;./example/example1/raw_catchment.inp&quot;)
 
-# Functions provided in swmmr are used for visulization
+# Functions provided in swmmr are used for visualization
 sub_sf &lt;- subcatchments_to_sf(inp)
 lin_sf &lt;- links_to_sf(inp)
 jun_sf &lt;- junctions_to_sf(inp)
@@ -336,7 +336,7 @@ sub_sf &lt;- dplyr::bind_cols(sub_sf, lab_coord)
 rg_sf &lt;- dplyr::bind_cols(rg_sf, lab_rg_coord)
 
 ggplot() + 
-  # first plot the subcatchment and colour continously by Area
+  # first plot the subcatchment and color continuously by Area
   geom_sf(data = sub_sf, aes(fill = Perc_Imperv), color = &quot;black&quot;, alpha = 0.8) + 
   scale_fill_gradient(low = &quot;lightgreen&quot;, high = &quot;indianred4&quot;) +
   geom_sf(data = lin_sf, colour = &quot;blue&quot;, size = 1) +
@@ -348,7 +348,7 @@ ggplot() +
   scale_fill_gradient(limits = c(0,100), low = &quot;#009E73&quot;, high = &quot;#D16103&quot;) +
   theme_bw(base_size = 10)</code></pre>
 <p><img src="example1_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
-<p>The <code>run_swmm</code> function provided by swmmr is used execute SWMM simulation. The outflow is store in <em>test.txt</em> in the current the current working directory, and is stored in the <code>raw_outflow</code> variable using the <code>read_outflow</code> function as defined in the code chunk below.</p>
+<p>The <code>run_swmm</code> function provided by swmmr is used execute SWMM simulation. The outflow is store in <em>test.txt</em> in the current the current working directory and is stored in the <code>raw_outflow</code> variable using the <code>read_outflow</code> function as defined in the code chunk below.</p>
 <pre class="r"><code>run_swmm(&quot;./example/example1/raw_catchment.inp&quot;)
 
 read_outflow &lt;- function(fpath = &quot;outflow.txt&quot;){
@@ -371,13 +371,13 @@ raw_outflow &lt;- read_outflow()</code></pre>
 <p>Assume the green roofs have a surface area of 0.25 acre (i.e., half of the catchment area). The SWMM model for the green roofs is <em>SWMM_green_roof.inp</em>. The outflow hydrograph from green roofs can be obtained using the <code>run_swmm</code> and <code>read_outflow</code> function.</p>
 <pre class="r"><code>run_swmm(&quot;./example/example1/SWMM_green_roof.inp&quot;)
 SWMM_green_roof_outflow &lt;- read_outflow()</code></pre>
-<p>The hydrograph is then save in <em>GR_outflow.txt</em> using <code>write_csv</code>, and is later used as input flows to SWMM.</p>
+<p>The hydrograph is then saved in <em>GR_outflow.txt</em> using <code>write_csv</code>, and is later used as input flows to SWMM.</p>
 <pre class="r"><code>fname = &quot;./example/example1/GR_outflow.txt&quot;
 write_csv(SWMM_green_roof_outflow, path = fname)</code></pre>
 </div>
 <div id="catchment-with-green-roofs-modeled-using-swmms-green-roof-module" class="section level3">
 <h3>3. Catchment with green roofs modeled using SWMM’s green roof module</h3>
-<p>The catchment with green roofs is modeled using SWMM. The model is stored in <em>SWMM_catchment_w_GR.inp</em>. The simulation can be execuated using the following code chunk. The simulated outflow is stored in the <code>SWMM_catchment_w_GR_outflow</code> varible.</p>
+<p>The catchment with green roofs is modeled using SWMM. The model is stored in <em>SWMM_catchment_w_GR.inp</em>. The simulation can be executed using the following code chunk. The simulated outflow is stored in the <code>SWMM_catchment_w_GR_outflow</code> variable</p>
 <pre class="r"><code>run_swmm(&quot;./example/example1/SWMM_catchment_w_GR.inp&quot;)
 SWMM_catchment_w_GR_outflow &lt;- read_outflow()</code></pre>
 </div>
@@ -388,9 +388,9 @@ SWMM_catchment_w_GR_outflow &lt;- read_outflow()</code></pre>
 
 print(GI_plan)</code></pre>
 <pre><code>## # A tibble: 1 x 6
-##   inflow_path                                                             outlet subcatchment_name per_area_rep imp_area_rep width_adj
-##   &lt;chr&gt;                                                                   &lt;chr&gt;  &lt;chr&gt;                    &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
-## 1 C:/Users/User/Documents/swmm_gi_toolbox/example/example1/GR_outflow.txt 0      S1                           0         0.25       115</code></pre>
+##   inflow_path       outlet subcatchment_na~ per_area_rep imp_area_rep width_adj
+##   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+## 1 C:/Users/User/Do~ 0      S1                          0         0.25       115</code></pre>
 <p>Six variables are defined.</p>
 <ol style="list-style-type: decimal">
 <li><em>inflow_path</em>: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM.</li>
@@ -400,7 +400,7 @@ print(GI_plan)</code></pre>
 <li><em>imp_area_rep</em>: impervious area represented by the inflow hydrograph, i.e., the impervious area modeled externally.</li>
 <li><em>width_adj</em>: the subcatchment width parameter after modeled GIs externally. <em>0</em> means no change to subcatchment width.</li>
 </ol>
-<p>The outflow hydrograph are imported to SWMM using routing interface files. The interface file can be created using the <code>write_routing_interface_file</code> function provided by the toolbox.</p>
+<p>The outflow hydrograph is input to SWMM using routing interface files. The interface file can be created using the <code>write_routing_interface_file</code> function provided by the toolbox.</p>
 <pre class="r"><code># read the SWMM input file of the original catchment using swmmr::read_inp
 inp &lt;- read_inp(&quot;./example/example1/raw_catchment.inp&quot;)
 
@@ -411,13 +411,14 @@ write_routing_interface_file(GI_plan, inp, routing_interface_path)</code></pre>
 <p><code>write_routing_interface_file</code> returns <em>TRUE</em> is the routing interface is created successfully. <code>write_routing_interface_file</code> takes three arguments.</p>
 <ol style="list-style-type: decimal">
 <li><em>GI_plan</em>: the tibble that stores the information needed for creating routing interface file; it is output of the <code>read_GI_plan</code> function. See explanations for <code>read_GI_plan</code> above.</li>
-<li><em>inp</em>: the object that corresponds to input file read by <code>swmmr::read_inp</code>.</li>
+<li><em>inp</em>: the object that corresponds to the input file read by <code>swmmr::read_inp</code>.</li>
 <li><em>routing_interface_path</em>: the file path of the routing interface file to be created.</li>
+<li><em>flow_unit</em>: The unit of the hydrograph. The default is “CFS” (cubic feet per second).</li>
 </ol>
 <p>SWMM input file needs to be modified to accommodate the external modeling of green roofs. The <code>modify_inp</code> function provided by the toolbox can modify the <em>inp</em> object of the original catchment according to <em>GI_plan</em>.</p>
 <pre class="r"><code>new_inp &lt;- modify_inp(GI_plan, inp, routing_interface_path)</code></pre>
-<p><code>modify_inp</code> returns the <em>inp</em> object correspond to the catchment after GIs are modeled externally. It takes three arguments, which are the same as in the <code>write_routing_interface_file</code> function. See explanations above.</p>
-<p>The modified SWMM input file can then created and execuated using the <code>write_inp</code> and <code>run_swmm</code> fucntions provided by swmmr.</p>
+<p><code>modify_inp</code> returns the <em>inp</em> object corresponds to the catchment after GIs are modeled externally. It takes three arguments, which are the first three arguments of <code>write_routing_interface_file</code>. See the explanations above.</p>
+<p>The modified SWMM input file can then created and executed using the <code>write_inp</code> and <code>run_swmm</code> functions provided by swmmr.</p>
 <pre class="r"><code># write new input file
 write_inp(new_inp, file = &quot;./example/example1/test.inp&quot;)
 # run simulation
@@ -425,11 +426,11 @@ run_swmm(&quot;./example/example1/test.inp&quot;)
 # read outflow hydrograph
 coupled_outflow &lt;- read_outflow()</code></pre>
 </div>
-<div id="compare-the-results-of-model-green-roofs-externally-and-interanlly-using-swmm" class="section level3">
-<h3>5. Compare the results of model green roofs externally and interanlly using SWMM</h3>
-<p>The two simulated outflow hydrographs, <em>SWMM_catchment_w_GR_outflow</em> and <em>coupled_outflow</em>, are supposed to be the same. The following code chunk produces a figure that compares the hydrographs of the original catchment and the catchment with green roofs modeled internally and externally.</p>
+<div id="compare-the-results-of-model-green-roofs-externally-and-internally-using-swmm" class="section level3">
+<h3>5. Compare the results of model green roofs externally and internally using SWMM</h3>
+<p>The two simulated outflow hydrographs, <em>SWMM_catchment_w_GR_outflow</em> and <em>coupled_outflow</em>, are expected to be the same. The following code chunk produces a figure that compares the hydrographs of the original catchment and the catchment with green roofs modeled internally and externally.</p>
 <pre class="r"><code># create a tibble that stores the outflow hydrographs of three cases
-# convert to long form for ploting
+# convert to long form for plotting
 hydrographs &lt;- tibble(
   datetime = raw_outflow$datetime,
   original = raw_outflow$flow,
@@ -451,8 +452,8 @@ ggplot(hydrographs, aes(datetime, value, linetype = case, color = case)) +
         legend.justification = c(1,1),
         legend.key.width = unit(1.5, &quot;cm&quot;))</code></pre>
 <p><img src="example1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
-<p>As expected, the hydrographs obtained for internal and external modeling cases are almost the same. This confirms the code worked as expected, i.e., the externally modeled outflow from green roofs are correctly written into the routing interface file, and the SWMM model parameters are correctly adjusted to represented the catchment areas without green roofs.</p>
-<p>The difference in peak flow of the two modeling methods is -0.003 CFS, or -0.309%, and in runoff volume is -0.5 cubic feet, or -0.014%. The very small differences are mainly caused by rounding error in computation and file processing.</p>
+<p>As expected, the hydrographs obtained for internal and external modeling cases are almost the same. This confirms the code worked as expected, i.e., the externally modeled outflow from green roofs is correctly written into the routing interface file, and the SWMM model parameters are correctly adjusted to represented the catchment areas without green roofs.</p>
+<p>The difference in peak flow of the two modeling methods is -0.003 CFS, or -0.309%, and in runoff volume is -0.5 cubic feet, or -0.014%. The very small differences are mainly caused by rounding errors in computation and file processing.</p>
 </div>
 </div>
 

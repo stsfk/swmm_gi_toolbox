@@ -10,18 +10,18 @@ knit: (function(input_file, encoding) {
 
 The webpage is created to demonstrate the application procedures of the toolbox written in R for coupling the United States Environmental Protection Agency (EPA)'s [Storm Water Management Model (SWMM)](https://www.epa.gov/water-research/storm-water-management-model-swmm) and other green infrastructure (GI) models. The toolbox can be download at this [GitHub repository](https://github.com/stsfk/swmm_gi_toolbox). The main functions are included in *interface_function.R*.
 
-This document is written in [R Markdown](https://rmarkdown.rstudio.com/) format. The [R version 3.6.3](https://www.r-project.org/) was used for the experiments. The packages used by the toolbox are [tidyverse](https://www.tidyverse.org/), [lubridate](https://lubridate.tidyverse.org/), and [swwmr](https://github.com/dleutnant/swmmr), which can be easily installed using the `install.packages` function.
+This website is built using [R Markdown](https://rmarkdown.rstudio.com/) format. The [R version 3.6.3](https://www.r-project.org/) was used for the experiments. The packages used by the toolbox are [tidyverse](https://www.tidyverse.org/), [lubridate](https://lubridate.tidyverse.org/), and [swwmr](https://github.com/dleutnant/swmmr), which can be easily installed using the `install.packages` function.
 
-The code chunk below loads the functions provided by the toolbox. At the same time, the required package are automatically installed (if unavailable) and loaded using the [pacman](https://cran.r-project.org/web/packages/pacman/pacman.pdf) package.
+The code chunk below loads the functions provided by the toolbox. At the same time, the required packages are automatically installed (if unavailable) and loaded using the [pacman](https://cran.r-project.org/web/packages/pacman/pacman.pdf) package.
 ```{r eval=FALSE}
 source("interface_functions.R")
 ```
 
 To follow the examples, SWMM needs to be installed. It can be downloaded for free from this [link](https://www.epa.gov/water-research/storm-water-management-model-swmm). The source code can be found in the *example.Rmd* file, and the data can be found in the *example* folder. The experiments were conducted on the Microsoft Windows 10 operating system, and SWMM build 5.1.014 was used.
 
-* [Example 1](https://stsfk.github.io/swmm_gi_toolbox/example1.html) compares the results obtained by modeling green roofs internally and externaly using the SWMM green roof module. This example provides detailed explanations on the data preparation, variable requirement, and execuation of the toolbox. This example also confirms the toolbox works as expected.
-* [Example 2](https://stsfk.github.io/swmm_gi_toolbox/example2.html) presents a workflow that involves multiple subcatchments, each with multiple GIs installed. The code used in this example may be reused for furture stuides, where multiple elements are presented.
-* [Example 3](https://stsfk.github.io/swmm_gi_toolbox/example3.html) explores the function of modifying subcatchment parameters after modeling GIs externally. The code used in this example may be expanded to study the implications of changing SWMM model parameters after intalling GIs.
-* [Example 4](https://stsfk.github.io/swmm_gi_toolbox/example4.html) uses a minimal example to show the application procedures that allow **users with little programing knowledge** to use the proposed toolbox.
+* [Example 1](https://stsfk.github.io/swmm_gi_toolbox/example1.html) compares the results obtained by modeling green roofs internally and externally using the SWMM green roof module. This example provides detailed explanations on the data preparation, variable requirement, and execution of the toolbox. This example also confirms the toolbox works as expected.
+* [Example 2](https://stsfk.github.io/swmm_gi_toolbox/example2.html) presents a workflow that involves multiple subcatchments, each with multiple GIs installed. The code used in this example may be reused for future studies, where multiple elements are presented.
+* [Example 3](https://stsfk.github.io/swmm_gi_toolbox/example3.html) explores the function of modifying subcatchment parameters after modeling GIs externally. The code used in this example may be expanded to study the implications of changing SWMM model parameters after installing GIs.
+* [Example 4](https://stsfk.github.io/swmm_gi_toolbox/example4.html) uses a minimal example to show the application procedures that allow **users with little programming knowledge** to use the proposed toolbox.
 
 
