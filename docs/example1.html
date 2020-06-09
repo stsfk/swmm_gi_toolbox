@@ -16,12 +16,12 @@
 <script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -385,9 +385,11 @@ SWMM_catchment_w_GR_outflow &lt;- read_outflow()</code></pre>
 
 GI_plan</code></pre>
 <pre><code>## # A tibble: 1 x 6
-##   inflow_path                                                        outlet subcatchment_na~ per_area_rep imp_area_rep width_adj
-##   &lt;chr&gt;                                                              &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
-## 1 C:/Users/User/Documents/swmm_gi_toolbox/example/example1/GR_outfl~ 0      S1                          0         0.25       115</code></pre>
+##   inflow_path outlet subcatchment_na~ per_area_rep
+##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;
+## 1 C:/Users/U~ 0      S1                          0
+## # ... with 2 more variables: imp_area_rep &lt;dbl&gt;,
+## #   width_adj &lt;dbl&gt;</code></pre>
 <p>Six variables are defined.</p>
 <ol style="list-style-type: decimal">
 <li><em>inflow_path</em>: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM.</li>

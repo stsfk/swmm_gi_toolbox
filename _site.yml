@@ -13,4 +13,7 @@ navbar:
       href: example3.html
     - text: "About"
       href: about.html
-    
+output:
+  html_document:
+    theme: cosmo
+    highlight: textmate
