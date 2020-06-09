@@ -285,6 +285,9 @@ $(document).ready(function () {
   <a href="example3.html">Exampe 3</a>
 </li>
 <li>
+  <a href="example4.html">Exampe 4</a>
+</li>
+<li>
   <a href="about.html">About</a>
 </li>
       </ul>
@@ -383,13 +386,11 @@ SWMM_catchment_w_GR_outflow &lt;- read_outflow()</code></pre>
 <p>The information the toolbox needed for coupling <em>GR_outflow.txt</em> and <em>raw_catchment.inp</em> is stored in the file <em>GI_plan.csv</em>. It can be read using the <code>read_GI_plan</code> function in the toolbox.</p>
 <pre class="r"><code>GI_plan &lt;- read_GI_plan(&quot;./example/example1/GI_plan.csv&quot;)
 
-GI_plan</code></pre>
+print(GI_plan)</code></pre>
 <pre><code>## # A tibble: 1 x 6
-##   inflow_path outlet subcatchment_na~ per_area_rep
-##   &lt;chr&gt;       &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;
-## 1 C:/Users/U~ 0      S1                          0
-## # ... with 2 more variables: imp_area_rep &lt;dbl&gt;,
-## #   width_adj &lt;dbl&gt;</code></pre>
+##   inflow_path                                                             outlet subcatchment_name per_area_rep imp_area_rep width_adj
+##   &lt;chr&gt;                                                                   &lt;chr&gt;  &lt;chr&gt;                    &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+## 1 C:/Users/User/Documents/swmm_gi_toolbox/example/example1/GR_outflow.txt 0      S1                           0         0.25       115</code></pre>
 <p>Six variables are defined.</p>
 <ol style="list-style-type: decimal">
 <li><em>inflow_path</em>: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM.</li>

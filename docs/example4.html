@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>example4.utf8</title>
+
+<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">SWMM-GI coupling tool</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="example1.html">Exampe 1</a>
+</li>
+<li>
+  <a href="example2.html">Exampe 2</a>
+</li>
+<li>
+  <a href="example3.html">Exampe 3</a>
+</li>
+<li>
+  <a href="example4.html">Exampe 4</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+
+</div>
+
+
+<div id="example-4-minimal-examples-of-using-the-code-to-couple-green-infrastructure-gi-models-and-swmm" class="section level2">
+<h2>Example 4 Minimal examples of using the code to couple green infrastructure (GI) models and SWMM</h2>
+<div id="set-up-r-working-environment" class="section level3">
+<h3>1. Set up R working environment</h3>
+<p>The toolbox works for Windows operating system, and is written in R. The first step is to set up an R working environment. The Rstudio IDE is recommended. The set up procedures can be found <a href="https://www.earthdatascience.org/courses/earth-analytics/document-your-science/setup-r-rstudio/">here</a>, <a href="https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R">here</a>, or using Google.</p>
+</div>
+<div id="download-the-toolbox" class="section level3">
+<h3>2. Download the toolbox</h3>
+<p>The toolbox can be downloaded at this <a href="https://github.com/stsfk/swmm_gi_toolbox">GitHub repository</a>. Click “Clone or download”, then click “Download ZIP”.</p>
+<p>Then unzip the file to a working folder, e.g., we can simply place the unpacked files on desktop.</p>
+</div>
+<div id="open-the-downloaded-r-project-in-rstudio" class="section level3">
+<h3>3. Open the downloaded R project in Rstudio</h3>
+<p>Open Rstudio, then select “Open project”, then click open <em>swmm_gi_toolbox.Rproj</em> file in the working folder. As shown in the Figure below.</p>
+<p><img src="example/example4/image/rstudio_open_project.png" /></p>
+</div>
+<div id="prepare-swmm-input-file-and-output-hydrographs-from-green-infrastructures" class="section level3">
+<h3>4. Prepare SWMM input file and output hydrographs from green infrastructures</h3>
+<p>The <em>raw_catchment.inp</em> file is SWMM input file of the original catchment beforing installing GIs. It should be copy to the working folder or its subfolders. In this case, the file is placed at “<em>working_folder</em>”/example/example4.</p>
+<p><img src="example/example4/image/files.png" /></p>
+<p>The outflow hydrographs from GIs are stored in <em>outflow_1.csv</em> and <em>outflow_2.csv</em>. There are two columns in these files, “datetime” and “flow”.</p>
+<p><img src="example/example4/image/outflow_hydrograph.png" /></p>
+<p>The datetime column is in format “yyyy-mm-dd hh:mm:ss” in Microsoft Excel.</p>
+<p><img src="example/example4/image/datetime_format.png" /></p>
+<p>The file looks like the following if opened in text editor.</p>
+<p><img src="example/example4/image/outflow_hydrograph_text.png" /></p>
+<p>The flow column is the outflow rate in CFS (cubic feet per second) or LPS (liters per second), etc., depending on the unit used in SWMM simulation.</p>
+</div>
+<div id="prepare-the-gi-modeling-strategy-input-file" class="section level3">
+<h3>5. Prepare the GI modeling strategy input file</h3>
+<p>The file is named as <em>gi_plan.csv</em>, it contains the following columns, (1) inflow_path, (2) outlet, (3) subcatchment_name, (4) per_area_rep, (5) imp_area_rep, (6) width_adj, (7) SUBAREAS_N-Imperv. The first 6 columns are compulsory, and the last one is optional. The number of the optional columns is arbitrary, and the names are set according to the modeling strategy defined by the modeler.</p>
+<p><img src="example/example4/image/gi_plan.png" /></p>
+<p><strong>Required columns</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><em>inflow_path</em>: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM. It can be either <a href="https://stackoverflow.com/questions/36834767/how-to-use-rstudio-relative-paths">absolute path of relative path</a> .</li>
+<li><em>outlet</em>: the node or the subcatchment that receives the inflow. <em>0</em> means the same outlet as the subcatchment is used.</li>
+<li><em>subcatchment_name</em>: the name of the subcatchment, where GIs are installed.</li>
+<li><em>per_area_rep</em>: pervious area represented by the inflow hydrograph, i.e., the pervious area modeled externally.</li>
+<li><em>imp_area_rep</em>: impervious area represented by the inflow hydrograph, i.e., the impervious area modeled externally.</li>
+<li><em>width_adj</em>: the subcatchment width parameter after modeled GIs externally. <em>0</em> means no change to subcatchment width.</li>
+</ol>
+<p><strong>Optional columns</strong>:</p>
+<ul>
+<li>The name of the optional columns are in the format “section_variable”. The “section” term corresponds to the name of the tab used in swmm input files, such as the INFILTRATION tab; the infiltration parameters are store under this tab. The “variable” term corresponds to the name of the variable, e.g., “MaxRate” corresponds to the maximum infiltration rate. Thus, the column can be named as “INFILTRATION_MaxRate”, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the inflow_path column. “0” means no change to the parameters after installing GIs. In this study, SUBAREAS_N-Imperv correspond to the Manning’s roughness n parameter for the impervious area of the subcatchment.</li>
+</ul>
+<p>The <em>gi_plan.csv</em> provided by this example can be used as a template for future studies.</p>
+</div>
+<div id="create-routing-interface-file" class="section level3">
+<h3>6. Create routing interface file</h3>
+<p>Create an R script named “example4.R” (the file is also provided in the example folder).</p>
+<p>Copy the following code to the editor and then run.</p>
+<pre class="r"><code># Load toolbox functions
+source(&quot;interface_functions.R&quot;)
+
+# Read original SWMM input file using swmmr::read_inp
+inp &lt;- read_inp(&quot;./example/example4/raw_catchment.inp&quot;)
+
+# Read GI modeling strategy using read_GI_plan
+GI_plan &lt;- read_GI_plan(&quot;./example/example4/gi_plan.csv&quot;)
+
+# Write routing interface file using write_routing_interface_file
+routing_interface_path &lt;- &quot;./example/example4/routing_interface.txt&quot;
+write_routing_interface_file(GI_plan, inp, routing_interface_path)</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<p>It looks likes the following figure.</p>
+<p><img src="example/example4/image/code_example.png" /></p>
+<p>A routing interface file named <em>routing_interface.txt</em> is created, and is placed at <em>example4</em> folder (specified by the <code>routing_interface_path</code> variable). The routing interface file looks like:</p>
+<p><img src="example/example4/image/routing_interface.png" /></p>
+</div>
+<div id="create-modified-swmm-file" class="section level3">
+<h3>7. Create modified SWMM file</h3>
+<p>The SWMM input file is first read into R by <code>swmmr::read_inp</code>, and then modified using the <code>modify_inp</code> function. The modified SWMM input file is created using <code>swmmr::write_inp</code>.</p>
+<p>Copy the following code to the editor and run.</p>
+<pre class="r"><code># Modify object associated with SWMM input file using modify_inp
+new_inp &lt;- modify_inp(GI_plan, inp, routing_interface_path)
+
+# Write modified SWMM input file using swmmr::write_inp
+new_inp_path &lt;- &quot;./example/example4/test.inp&quot;
+write_inp(new_inp, file = new_inp_path)</code></pre>
+<p>Now the modified SWMM input file is created, named <em>test.inp</em> and placed in <em>example4</em> folder. The file path is specified by the <code>new_inp_path</code> variable.</p>
+<p>The new input file opened in text editor looks like the following.</p>
+<p><img src="example/example4/image/modified_swmm_input.png" /></p>
+</div>
+<div id="run-swmm-simulation" class="section level3">
+<h3>8. Run SWMM simulation</h3>
+<p>Now open the modified SWMM input file using SWMM and run simulation. The <em>USE INFLOW … </em> text can be found in Options, Files tab.</p>
+<p><img src="example/example4/image/swmm_screen.png" /></p>
+<p>Now click run simulation.</p>
+</div>
+<div id="check-simulation-results" class="section level3">
+<h3>9. Check simulation results</h3>
+<p>Open Status Report, we can see that our catchment indeed received externally generated inflows. The modeler can check the the catchment parameters to see if the toolbox worked as expected.</p>
+<p><img src="example/example4/image/status%20report.png" /></p>
+</div>
+<div id="summary" class="section level3">
+<h3>10. Summary</h3>
+<p>This example provides a minimal example of applying the proposed toolbox. The required files are, (1) SWMM input file of the catchment before installing GIs, (2) outflow hydrographs from GIs, (3) A modeling plan that specifies the changes to catchment parameters after installing GIs, (4) a few lines of code. Example files are provided in <em>exampl4</em> folder, and future modeler can use them as template and adapt them to new studies.</p>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

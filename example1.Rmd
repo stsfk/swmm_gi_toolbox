@@ -108,7 +108,7 @@ The information the toolbox needed for coupling *GR_outflow.txt* and *raw_catchm
 ```{r}
 GI_plan <- read_GI_plan("./example/example1/GI_plan.csv")
 
-GI_plan
+print(GI_plan)
 ```
 Six variables are defined.
 

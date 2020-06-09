@@ -285,6 +285,9 @@ $(document).ready(function () {
   <a href="example3.html">Exampe 3</a>
 </li>
 <li>
+  <a href="example4.html">Exampe 4</a>
+</li>
+<li>
   <a href="about.html">About</a>
 </li>
       </ul>
@@ -307,7 +310,7 @@ $(document).ready(function () {
 <h2>Example 3 Adjusting subcatchment paramters after installing GIs</h2>
 <div id="overview" class="section level3">
 <h3>1. Overview</h3>
-<p>In this example, the function to modify subcatchment paramters after modeling GIs externally is explored. Additional changes to the catchment can be passed to the <code>modify_inp</code> function through the <em>GI_plan</em> variable, where tibble columns with names in the format <em>section_variable</em> are defined. The <em>“section”</em> term corresponds to the name of the tab used in swmm input files, such as the <em>INFILTRATION</em> tab, the the infiltration parameters are store under this tab. The <em>“variable”</em> term corresponds to the name of the variable, e.g., <em>“MaxRate”</em> corresponds to the maximum infiltration rate. Thus, the column can be named as <em>“INFILTRATION_MaxRate”</em>, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the <em>inflow_path</em> column (see example 1 for more explanations).</p>
+<p>In this example, the function to modify subcatchment paramters after modeling GIs externally is explored. Additional changes to the catchment can be passed to the <code>modify_inp</code> function through the <em>GI_plan</em> variable, where tibble columns with names in the format <em>section_variable</em> are defined. The <em>“section”</em> term corresponds to the name of the tab used in swmm input files, such as the <em>INFILTRATION</em> tab; the infiltration parameters are store under this tab. The <em>“variable”</em> term corresponds to the name of the variable, e.g., <em>“MaxRate”</em> corresponds to the maximum infiltration rate. Thus, the column can be named as <em>“INFILTRATION_MaxRate”</em>, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the <em>inflow_path</em> column (see example 1 for more explanations).</p>
 <p>The goal of this example is to show the consequences of changing subcatchment width after modeling bioretention cells and their controlled areas externally.</p>
 <p>The catchment studied in this example is the same as in example 2. It has three subcatchments, as shown in the figure below.</p>
 <pre class="r"><code># Load toolbox functions

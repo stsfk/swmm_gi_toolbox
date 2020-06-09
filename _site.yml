@@ -11,6 +11,8 @@ navbar:
       href: example2.html
     - text: "Exampe 3"
       href: example3.html
+    - text: "Exampe 4"
+      href: example4.html
     - text: "About"
       href: about.html
 output:
