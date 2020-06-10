@@ -310,14 +310,14 @@ $(document).ready(function () {
 <h2>Example 2 Installing multiple bioretention cells in different subcatchments</h2>
 <div id="overview" class="section level3">
 <h3>1. Overview</h3>
-<p>This examples shows the procedure of using the toolbox when there are multiple subcatchments, and multiple green infrastructures (GIs) of different designs are installed in each subcatchment. The data used in this study can be found in <em>example2</em> folder. The simulations are driven by a 60 mm SCS type III 24-hr design storm.</p>
-<p>The studied catchment (in <em>raw_catchment.inp</em>) has three subcatchments. The surface area of the them ranges between 0.5 acre to 0.9 acre, and the imperviousness ranges between 40% to 80%. The following code chunk generates a map of the catchment using functions provided by the swmmr package.</p>
+<p>This example shows the procedure of using the toolbox when there are multiple subcatchments, and multiple green infrastructures (GIs) of different designs are installed in each subcatchment. The data used in this study can be found in <em>example2</em> folder. The simulations are driven by a 60 mm SCS type III 24-hr design storm.</p>
+<p>The studied catchment (in <em>raw_catchment.inp</em>) has three subcatchments. The surface area of them ranges between 0.5 acres to 0.9 acres, and the imperviousness ranges between 40% to 80%. The following code chunk generates a map of the catchment using functions provided by the swmmr package.</p>
 <pre class="r"><code># Load toolbox functions
 source(&quot;interface_functions.R&quot;)
 
 inp &lt;- read_inp(&quot;./example/example2/raw_catchment.inp&quot;)
 
-# Functions provided in swmmr are used for visulization
+# Functions provided by swmmr are used for visualization
 sub_sf &lt;- subcatchments_to_sf(inp)
 lin_sf &lt;- links_to_sf(inp)
 jun_sf &lt;- junctions_to_sf(inp)
@@ -336,7 +336,7 @@ sub_sf &lt;- dplyr::bind_cols(sub_sf, lab_coord)
 rg_sf &lt;- dplyr::bind_cols(rg_sf, lab_rg_coord)
 
 ggplot() + 
-  # first plot the subcatchment and colour continously by Area
+  # first plot the subcatchment and color continuously by Area
   geom_sf(data = sub_sf, aes(fill = Perc_Imperv), color = &quot;black&quot;, alpha = 0.8) + 
   scale_fill_gradient(low = &quot;lightgreen&quot;, high = &quot;indianred4&quot;) +
   geom_sf(data = lin_sf, colour = &quot;blue&quot;, size = 1) +
@@ -351,11 +351,11 @@ ggplot() +
 </div>
 <div id="outflow-hydrographs-from-bioretention-cells-of-different-designs" class="section level3">
 <h3>2. Outflow hydrographs from bioretention cells of different designs</h3>
-<p>Three different bioretention cell designs are considered in this study. The main difference is in the bioretention cell’s capature ratio. In each desgin, a bioretention cell is assumed to control 0.1 acre of the imperivous area and its surface area is set to 3.4 %, 6.9 %, or 10.3 % of the controlled area. The outflow hydrographs from the bioretention cells are modeled using SWMM. The input files are named <em>SWMM_bioretention1.inp</em>, <em>SWMM_bioretention2.inp</em>, and <em>SWMM_bioretention3.inp</em>. The following code execute SWMM simulations, and write the simulated hydrographs in to files named <em>bc1_outflow.txt</em>, etc.</p>
+<p>Three different bioretention cell designs are considered in this study. The main difference is in the bioretention cell’s capture ratio. In each design, a bioretention cell is assumed to control 0.1 acres of the impervious area and its surface area is set to 3.4 %, 6.9 %, or 10.3 % of the controlled area. The outflow hydrographs from the bioretention cells are modeled using SWMM. The input files are named <em>SWMM_bioretention1.inp</em>, <em>SWMM_bioretention2.inp</em>, and <em>SWMM_bioretention3.inp</em>. The following code executes SWMM simulations, and write the simulated hydrographs into files named <em>bc1_outflow.txt</em>, etc.</p>
 <pre class="r"><code>read_outflow &lt;- function(fpath = &quot;outflow.txt&quot;){
   # Purpose: read simulated outflow hydrograph
   # Input: 
-  #    fpath = file path of the simulated outflow, which is defined in the [FILES] tabe in SWMM input file
+  #    fpath = file path of the simulated outflow, which is defined in the [FILES] tab in SWMM input file
   # Output:
   #    a tibble stores the outflow hydrograph
   
@@ -365,24 +365,24 @@ ggplot() +
     arrange(datetime)
 }
 
-# Case 1: bioretention cells occupies 3.4 % of the catchment area
+# Case 1: bioretention cells occupy 3.4 % of the catchment area
 run_swmm(&quot;./example/example2/SWMM_bioretention1.inp&quot;)
 bc1_outflow &lt;- read_outflow()
 fname = &quot;./example/example2/bc1_outflow.txt&quot;
 write_csv(bc1_outflow, path = fname)
 
-# Case 2: bioretention cells occupies 6.9 % of the catchment area
+# Case 2: bioretention cells occupy 6.9 % of the catchment area
 run_swmm(&quot;./example/example2/SWMM_bioretention2.inp&quot;)
 bc2_outflow &lt;- read_outflow()
 fname = &quot;./example/example2/bc2_outflow.txt&quot;
 write_csv(bc2_outflow, path = fname)
 
-# Case 3: bioretention cells occupies 10.3 % of the catchment area
+# Case 3: bioretention cells occupy 10.3 % of the catchment area
 run_swmm(&quot;./example/example2/SWMM_bioretention3.inp&quot;)
 bc3_outflow &lt;- read_outflow()
 fname = &quot;./example/example2/bc3_outflow.txt&quot;
 write_csv(bc3_outflow, path = fname)</code></pre>
-<p>The following code chunk produce a figure that compares the outlfow hydrograph generated for each bioretention design. The hydrographs varied considerably because of the modeling methods used for surface bypass flow and underdrain flow. More details on this issue can be found in this <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12637">paper</a>.</p>
+<p>The following code chunk produces a figure that compares the outflow hydrograph generated for each bioretention design. The hydrographs varied considerably because of the modeling methods used for surface bypass flow and underdrain flow. More details on this issue can be found in this <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/1752-1688.12637">paper</a>.</p>
 <pre class="r"><code># Join the hydrographs into a single tibble
 bc1_outflow$case = &quot;BC design 1&quot;
 bc2_outflow$case = &quot;BC design 2&quot;
@@ -392,7 +392,7 @@ bc_outflow &lt;- bc1_outflow %&gt;%
   bind_rows(bc2_outflow) %&gt;%
   bind_rows(bc3_outflow)
 
-# Ploting
+# Plotting
 ggplot(bc_outflow, aes(datetime, flow, color = case, linetype = case)) +
   geom_line(size = 0.65) +
   scale_color_manual(values = c(&quot;grey&quot;, &quot;tomato3&quot;, &quot;turquoise3&quot;)) +
@@ -407,8 +407,8 @@ ggplot(bc_outflow, aes(datetime, flow, color = case, linetype = case)) +
 </div>
 <div id="creating-bioretention-cells-implementation-scenarios" class="section level3">
 <h3>3. Creating bioretention cells implementation scenarios</h3>
-<p>In this study, three units of bioretention cells are planned for each subcatchment, and the design of them are chosen randomly, i.e., different units of bioretention cells in the same subcatchment can have different designs.</p>
-<p>The following code chunk creates a list <code>gi_plans</code> to store the information needed for model coupling. The meaning of the column of the tibbles, such as <em>inflow_path</em> is explaned in the “Example 1” tab. 50 different GI implementation scenarios are randomly genearted, and in each scenario three units of bioretention cells of different designs are randomly choosen for each subcatchment. Each bioretention cell controls an impervious area of 0.1 acre and drains to the same outlet as the subcatchment. The number of scenarios can be changed by setting the value of <em>N</em> in the following code chunk.</p>
+<p>In this study, three units of bioretention cells are planned for each subcatchment, and their designs are chosen randomly, i.e., different units of bioretention cells in the same subcatchment can have different designs.</p>
+<p>The following code chunk creates a list of <code>gi_plans</code> to store the information needed for model coupling. The meaning of the column of the tibbles, such as <em>inflow_path</em> is explained in the <a href="https://stsfk.github.io/swmm_gi_toolbox/example1.html">Example 1</a>. 50 different GI implementation scenarios are randomly generated, and in each scenario, three units of bioretention cells of different designs are randomly chosen for each subcatchment. Each bioretention cell controls an impervious area of 0.1 acres and drains to the same outlet as the subcatchment. The number of scenarios can be changed by setting the <em>N</em> value in the following code chunk.</p>
 <pre class="r"><code>set.seed(10)
 
 inflow_paths &lt;- paste0(&quot;./example/example2/bc&quot;, 1:3, &quot;_outflow.txt&quot;)
@@ -428,8 +428,8 @@ for (i in 1:N){
 </div>
 <div id="creating-routing-interface-files-modify-swmm-input-file-and-run-simulations" class="section level3">
 <h3>4. Creating routing interface files, modify SWMM input file, and run simulations</h3>
-<p>The function <code>write_routing_interface_file</code> provided by the toolbox can automatically create routing interface files to store the externally generated inflows that is readable by SWMM. The function <code>modify_inp</code> can modify the SWMM input files to account for the situation that runoffs from a part of the subcatchment are modeled externally. The functions provided by swmmr are used to run SWMM simulations.</p>
-<p>The following code chunk dervies outflow hydrograph at the catchment outlet for each bioretention implementation scenario. For each bioretention implementation scenario, <code>write_routing_interface_file</code> function is first called to write SWMM interface file, <code>modify_inp</code> is then called to update the parameters of the catchment. Then <code>write_inp</code> and <code>run_swmm</code> are called to run SWMM simulations. The results are stored in the tibble <code>outflows</code>.</p>
+<p>The function <code>write_routing_interface_file</code> provided by the toolbox can automatically create routing interface files to store the externally generated inflows that are readable by SWMM. The function <code>modify_inp</code> can modify the SWMM input files to account for the situation that runoffs from a part of the subcatchment are modeled externally. The functions provided by swmmr are used to run SWMM simulations.</p>
+<p>The following code chunk derives outflow hydrograph at the catchment outlet for each bioretention implementation scenario. For each scenario, <code>write_routing_interface_file</code> function is first called to write SWMM interface file, <code>modify_inp</code> is then called to update the parameters of the catchment. Then <code>write_inp</code> and <code>run_swmm</code> are called to write SWMM input files and run simulations. The results are stored in the tibble <code>outflows</code>.</p>
 <pre class="r"><code># Read the SWMM input file for the original subcatchment
 inp &lt;- read_inp(&quot;./example/example2/raw_catchment.inp&quot;)
 
@@ -446,7 +446,7 @@ for (i in 1:N){
     routing_interface_path = routing_interface_path
   )
   
-  # modify the object associated with swmm input file
+  # modify the object associated with SWMM input file
   new_inp &lt;- modify_inp(
     GI_plan = gi_plan, 
     inp = inp, 
@@ -471,7 +471,7 @@ outflows &lt;- outflows %&gt;%
 </div>
 <div id="evaluate-simulation-results" class="section level3">
 <h3>5. Evaluate simulation results</h3>
-<p>The following figure shows the simulated hydrographs for all the scenarios, shown as grey lines. The mean flow rate is shown in blue lines. Considerable variations can be observed among different scenarios.</p>
+<p>The following figure shows the simulated hydrographs for all the scenarios using grey lines. The mean flow rate is shown using the blue line. Considerable variations can be observed among different bioretention implementation scenarios.</p>
 <pre class="r"><code># Keep data for relatively high flow periods
 data_plot &lt;- outflows %&gt;%
   filter(datetime &lt;= ymd_hm(&quot;2020-06-02 00:00&quot;))
@@ -483,7 +483,7 @@ data_plot2 &lt;- outflows %&gt;%
   mutate(mean_flow = mean(flow)) %&gt;%
   ungroup()
 
-# Ploting
+# Plotting
 ggplot() +
   geom_line(data = data_plot, aes(datetime, flow, group = case), color = &quot;grey50&quot;, size = 0.5) +
   geom_line(data = data_plot2, aes(datetime, mean_flow), color = &quot;blue&quot;, size = 0.8) +
@@ -491,8 +491,8 @@ ggplot() +
        y = &quot;Flow rate [CFS]&quot;) +
   theme_bw()</code></pre>
 <p><img src="example2_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-<p>This example presents a workflow that multiple GIs are installed in different subcatchment. The two functions <code>write_routing_interface_file</code> and <code>write_routing_interface_file</code> keep track of each outflow hydrograph from GIs and aggregate the outflows drained to the same node of the drainage network before writting them into routing interface files.</p>
-<p>The user needs to provide to the following information to the two functions, (1) a list of paths corrspond to the hydrographs, (2) the destinations of the hydrographs, and (3) the name of the subcatchment, which the GIs locates, and (4) the associated changes to the catchment parameter after modeling GIs externally (e.g., changes to the perious area of the subcatchment, changes to the width of the subcatchment, etc.) An example of the required information is provided in <em>exmaple_gi_plan.csv</em>. This file can be created using Microsoft Excel and similar spreadsheet software. This file can be read by the <code>read_GI_plan</code> function provided by the toolbox. Further details can be found in the paper listed in “Example 1” and the “About” section of this documentation.</p>
+<p>This example presents a workflow that multiple GIs are installed in different subcatchment. The two functions <code>write_routing_interface_file</code> and <code>write_routing_interface_file</code> keep track of each outflow hydrograph from GIs and aggregate the outflows drained to the same node of the drainage network before writing them into routing interface files.</p>
+<p>The user needs to provide to the following information to the two functions, (1) a list of paths correspond to the hydrographs, (2) the destinations of the hydrographs, and (3) the name of the subcatchment, where the GIs locate, and (4) the associated changes to the catchment parameter after modeling GIs externally (e.g., changes to the pervious area of the subcatchment, changes to the width of the subcatchment, etc.) An example of the required information is provided in <em>exmaple_gi_plan.csv</em>. This file can be created using Microsoft Excel and similar spreadsheet software. This file can be read by the <code>read_GI_plan</code> function provided by the toolbox. Further details can be found in “Example 1” and the paper listed in the “About” section of this documentation.</p>
 <pre class="r"><code>write_csv(gi_plans[[1]], path = &quot;./example/example2/exmaple_gi_plan.csv&quot;)</code></pre>
 </div>
 </div>
