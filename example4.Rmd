@@ -12,13 +12,13 @@ knit: (function(input_file, encoding) {
 
 ### 1. Set up R working environment
 
-The toolbox works for Windows operating system, and is written in R. The first step is to set up an R working environment. The Rstudio IDE is recommended. The set up procedures can be found [here](https://www.earthdatascience.org/courses/earth-analytics/document-your-science/setup-r-rstudio/), [here](https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R), or using Google.
+The toolbox works for Windows operating system, and is written in R. The first step is to set up an R working environment. The Rstudio IDE is recommended. The setup procedures can be found [here](https://www.earthdatascience.org/courses/earth-analytics/document-your-science/setup-r-rstudio/), [here](https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R), or using Google.
 
 ### 2. Download the toolbox
 
 The toolbox can be downloaded at this [GitHub repository](https://github.com/stsfk/swmm_gi_toolbox). Click "Clone or download", then click "Download ZIP". 
 
-Then unzip the file to a working folder, e.g., we can simply place the unpacked files on desktop.
+Then unzip the file to a working folder, e.g., we can simply place the unpacked files on the desktop.
 
 ### 3. Open the downloaded R project in Rstudio
 
@@ -26,9 +26,10 @@ Open Rstudio, then select "Open project", then click open *swmm_gi_toolbox.Rproj
 
 ![](./example/example4/image/rstudio_open_project.png)
 
+
 ### 4. Prepare SWMM input file and output hydrographs from green infrastructures
 
-The *raw_catchment.inp* file is SWMM input file of the original catchment beforing installing GIs. It should be copy to the working folder or its subfolders. In this case, the file is placed at "*working_folder*"/example/example4. 
+The *raw_catchment.inp* file is SWMM input file of the original catchment before installing GIs. It should be copied to the working folder or its subfolders. In this case, the file is placed at "*working_folder*"/example/example4. 
 
 ![](./example/example4/image/files.png)
 
@@ -40,7 +41,7 @@ The datetime column is in format "yyyy-mm-dd hh:mm:ss" in Microsoft Excel.
 
 ![](./example/example4/image/datetime_format.png)
 
-The file looks like the following if opened in text editor.
+The file looks like the following if opened in the text editor.
 
 ![](./example/example4/image/outflow_hydrograph_text.png)
 
@@ -64,7 +65,10 @@ The file is named as *gi_plan.csv*, it contains the following columns, (1) inflo
 
 **Optional columns**:
 
-* The name of the optional columns are in the format "section_variable". The “section” term corresponds to the name of the tab used in swmm input files, such as the INFILTRATION tab; the infiltration parameters are store under this tab. The “variable” term corresponds to the name of the variable, e.g., “MaxRate” corresponds to the maximum infiltration rate. Thus, the column can be named as “INFILTRATION_MaxRate”, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the inflow_path column. "0" means no change to the parameters after installing GIs. In this study, SUBAREAS_N-Imperv correspond to the Manning's roughness n parameter for the impervious area of the subcatchment.
+* The name of the optional columns are in the format "section_variable". The “section” term corresponds to the name of the tab used in SWMM input files, such as the INFILTRATION tab; the infiltration parameters are store under this tab. The “variable” term corresponds to the name of the variable, e.g., “MaxRate” corresponds to the maximum infiltration rate. Thus, the column can be named as “INFILTRATION_MaxRate”, and different values can be assigned to the column to reflect the changes to subcatchment parameters after installing the GI associated with the inflows specified in the inflow_path column. An example is shown in the figure below. "0" means no change to the parameters after installing GIs. In this study, SUBAREAS_N-Imperv corresponds to the Manning's roughness n parameter for the impervious area of the subcatchment.
+
+![](./example/example3/image/section_variable.png)
+
 
 The *gi_plan.csv* provided by this example can be used as a template for future studies.
 
@@ -93,11 +97,11 @@ It looks likes the following figure.
 
 ![](./example/example4/image/code_example.png)
 
-A routing interface file named *routing_interface.txt* is created, and is placed at *example4* folder (specified by the `routing_interface_path` variable). The routing interface file looks like:
+A routing interface file named *routing_interface.txt* is created and is placed at *example4* folder (specified by the `routing_interface_path` variable). The routing interface file looks like:
 
 ![](./example/example4/image/routing_interface.png)
 
-### 7. Create modified SWMM file
+### 7. Create modified SWMM input file
 
 The SWMM input file is first read into R by `swmmr::read_inp`, and then modified using the `modify_inp` function. The modified SWMM input file is created using `swmmr::write_inp`.
 
@@ -112,15 +116,15 @@ new_inp_path <- "./example/example4/test.inp"
 write_inp(new_inp, file = new_inp_path)
 ```
 
-Now the modified SWMM input file is created, named *test.inp* and placed in *example4* folder. The file path is specified by the `new_inp_path` variable.
+Now the modified SWMM input file is created, named *test.inp*, and placed in *example4* folder. The file path is specified by the `new_inp_path` variable.
 
-The new input file opened in text editor looks like the following.
+The new input file opened in the text editor looks like the following.
 
 ![](./example/example4/image/modified_swmm_input.png)
 
 ### 8. Run SWMM simulation
 
-Now open the modified SWMM input file using SWMM and run simulation. The *USE INFLOW ... * text can be found in Options, Files tab.
+Now open the modified SWMM input file using SWMM and run the simulation. The *USE INFLOW ... * text can be found in Options, Files tab.
 
 
 ![](./example/example4/image/swmm_screen.png)
@@ -129,17 +133,16 @@ Now click run simulation.
 
 ### 9. Check simulation results
 
-Open Status Report, we can see that our catchment indeed received externally generated inflows.
+After the simulation is finished, open Status Report, we can see that our catchment indeed received externally generated inflows.
 ![](./example/example4/image/status report.png)
 
-The following figure shows that node J1 received higher flows than that generated by subcatchment S1, suggesting that J1 received exterally genereated runoffs.  The modeler can check the the catchment parameters or detailed simualation results to see if the toolbox worked as expected.
+The following figure shows that node J1 received higher flows than that generated by subcatchment S1, suggesting that J1 received externally generated runoffs. The modeler can check the catchment parameters or detailed simulation results to see if the toolbox worked as expected.
 
 ![](./example/example4/image/subcatachment_flow.png)
 
 ### 10. Summary
 
-This example provides a minimal example of applying the proposed toolbox. The required files are, (1) SWMM input file of the catchment before installing GIs, (2) outflow hydrographs from GIs, (3) A modeling plan that specifies the changes to catchment parameters after installing GIs, (4) a few lines of code. Example files are provided in *exampl4* folder, and future modeler can use them as template and adapt them to new studies.
-
+This example provides a minimal example of applying the proposed toolbox. The required files are, (1) SWMM input file of the catchment before installing GIs, (2) outflow hydrographs from GIs, (3) A modeling plan that specifies the changes to catchment parameters after installing GIs, (4) a few lines of code. Example files are provided in *exampl4* folder, and future modelers can use them as a template and adapt them to new studies.
 
 
 
