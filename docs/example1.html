@@ -13,7 +13,7 @@
 
 <title>example1.utf8</title>
 
-<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.4/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -23,6 +23,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -374,6 +383,10 @@ SWMM_green_roof_outflow &lt;- read_outflow()</code></pre>
 <p>The hydrograph is then saved in <em>GR_outflow.txt</em> using <code>write_csv</code>, and is later used as input flows to SWMM.</p>
 <pre class="r"><code>fname = &quot;./example/example1/GR_outflow.txt&quot;
 write_csv(SWMM_green_roof_outflow, path = fname)</code></pre>
+<pre><code>## Warning: The `path` argument of `write_csv()` is deprecated as of readr 1.4.0.
+## Please use the `file` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
 </div>
 <div id="catchment-with-green-roofs-modeled-using-swmms-green-roof-module" class="section level3">
 <h3>3. Catchment with green roofs modeled using SWMM’s green roof module</h3>
@@ -388,9 +401,9 @@ SWMM_catchment_w_GR_outflow &lt;- read_outflow()</code></pre>
 
 print(GI_plan)</code></pre>
 <pre><code>## # A tibble: 1 x 6
-##   inflow_path       outlet subcatchment_na~ per_area_rep imp_area_rep width_adj
-##   &lt;chr&gt;             &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
-## 1 C:/Users/User/Do~ 0      S1                          0         0.25       115</code></pre>
+##   inflow_path                                                          outlet subcatchment_na~ per_area_rep imp_area_rep width_adj
+##   &lt;chr&gt;                                                                &lt;chr&gt;  &lt;chr&gt;                   &lt;dbl&gt;        &lt;dbl&gt;     &lt;dbl&gt;
+## 1 C:/Users/User/Documents/swmm_gi_toolbox/example/example1/GR_outflow~ 0      S1                          0         0.25       115</code></pre>
 <p>Six variables are defined.</p>
 <ol style="list-style-type: decimal">
 <li><em>inflow_path</em>: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM.</li>
@@ -417,6 +430,7 @@ write_routing_interface_file(GI_plan, inp, routing_interface_path)</code></pre>
 </ol>
 <p>SWMM input file needs to be modified to accommodate the external modeling of green roofs. The <code>modify_inp</code> function provided by the toolbox can modify the <em>inp</em> object of the original catchment according to <em>GI_plan</em>.</p>
 <pre class="r"><code>new_inp &lt;- modify_inp(GI_plan, inp, routing_interface_path)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p><code>modify_inp</code> returns the <em>inp</em> object corresponds to the catchment after GIs are modeled externally. It takes three arguments, which are the first three arguments of <code>write_routing_interface_file</code>. See the explanations above.</p>
 <p>The modified SWMM input file can then created and executed using the <code>write_inp</code> and <code>run_swmm</code> functions provided by swmmr.</p>
 <pre class="r"><code># write new input file
@@ -453,7 +467,7 @@ ggplot(hydrographs, aes(datetime, value, linetype = case, color = case)) +
         legend.key.width = unit(1.5, &quot;cm&quot;))</code></pre>
 <p><img src="example1_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>As expected, the hydrographs obtained for internal and external modeling cases are almost the same. This confirms the code worked as expected, i.e., the externally modeled outflow from green roofs is correctly written into the routing interface file, and the SWMM model parameters are correctly adjusted to represented the catchment areas without green roofs.</p>
-<p>The difference in peak flow of the two modeling methods is -0.003 CFS, or -0.309%, and in runoff volume is -0.5 cubic feet, or -0.014%. The very small differences are mainly caused by rounding errors in computation and file processing.</p>
+<p>The difference in peak flow of the two modeling methods is -0.004 CFS, or -0.393%, and in runoff volume is -0.606 cubic feet, or -0.016%. The very small differences are mainly caused by rounding errors in computation and file processing.</p>
 </div>
 </div>
 

@@ -13,7 +13,7 @@
 
 <title>Documentation of the toolbox for coupling SWMM and other green infrastructure models</title>
 
-<script src="site_libs/header-attrs-2.1/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.4/header-attrs.js"></script>
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -23,6 +23,15 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+      </style>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -308,10 +317,10 @@ $(document).ready(function () {
 
 
 <p>The webpage is created to demonstrate the application procedures of the toolbox written in R for coupling the United States Environmental Protection Agency (EPA)’s <a href="https://www.epa.gov/water-research/storm-water-management-model-swmm">Storm Water Management Model (SWMM)</a> and other green infrastructure (GI) models. The toolbox can be download at this <a href="https://github.com/stsfk/swmm_gi_toolbox">GitHub repository</a>. The main functions are included in <em>interface_function.R</em>.</p>
-<p>This website is built using <a href="https://rmarkdown.rstudio.com/">R Markdown</a> format. The <a href="https://www.r-project.org/">R version 3.6.3</a> was used for the experiments. The packages used by the toolbox are <a href="https://www.tidyverse.org/">tidyverse</a>, <a href="https://lubridate.tidyverse.org/">lubridate</a>, and <a href="https://github.com/dleutnant/swmmr">swwmr</a>, which can be easily installed using the <code>install.packages</code> function.</p>
+<p>This website is built using <a href="https://rmarkdown.rstudio.com/">R Markdown</a> format. The <a href="https://www.r-project.org/">R version 4.0.2</a> was used for the experiments. The packages used by the toolbox are <a href="https://www.tidyverse.org/">tidyverse</a>, <a href="https://lubridate.tidyverse.org/">lubridate</a>, and <a href="https://github.com/dleutnant/swmmr">swwmr</a>, which can be easily installed using the <code>install.packages</code> function.</p>
 <p>The code chunk below loads the functions provided by the toolbox. At the same time, the required packages are automatically installed (if unavailable) and loaded using the <a href="https://cran.r-project.org/web/packages/pacman/pacman.pdf">pacman</a> package.</p>
 <pre class="r"><code>source(&quot;interface_functions.R&quot;)</code></pre>
-<p>To follow the examples, SWMM needs to be installed. It can be downloaded for free from this <a href="https://www.epa.gov/water-research/storm-water-management-model-swmm">link</a>. The source code can be found in the <em>example.Rmd</em> file, and the data can be found in the <em>example</em> folder. The experiments were conducted on the Microsoft Windows 10 operating system, and SWMM build 5.1.014 was used.</p>
+<p>To follow the examples, SWMM needs to be installed. It can be downloaded for free from this <a href="https://www.epa.gov/water-research/storm-water-management-model-swmm">link</a>. The source code can be found in the <em>example.Rmd</em> file, and the data can be found in the <em>example</em> folder. The experiments were conducted on the Microsoft Windows 10 operating system, and SWMM build 5.1.015 was used.</p>
 <ul>
 <li><a href="https://stsfk.github.io/swmm_gi_toolbox/example1.html">Example 1</a> compares the results obtained by modeling green roofs internally and externally using the SWMM green roof module. This example provides detailed explanations on the data preparation, variable requirement, and execution of the toolbox. This example also confirms the toolbox works as expected.</li>
 <li><a href="https://stsfk.github.io/swmm_gi_toolbox/example2.html">Example 2</a> presents a workflow that involves multiple subcatchments, each with multiple GIs installed. The code used in this example may be reused for future studies, where multiple elements are presented.</li>

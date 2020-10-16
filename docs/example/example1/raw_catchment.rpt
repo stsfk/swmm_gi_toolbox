@@ -1,5 +1,5 @@
 
-  EPA STORM WATER MANAGEMENT MODEL - VERSION 5.1 (Build 5.1.014)
+  EPA STORM WATER MANAGEMENT MODEL - VERSION 5.1 (Build 5.1.015)
   --------------------------------------------------------------
 
   
@@ -57,7 +57,7 @@
   Exfiltration Loss ........         0.000         0.000
   Initial Stored Volume ....         0.000         0.000
   Final Stored Volume ......         0.000         0.000
-  Continuity Error (%) .....         0.036
+  Continuity Error (%) .....         0.038
   
   
   ********************************
@@ -73,7 +73,7 @@
   Average Time Step           :    10.00 sec
   Maximum Time Step           :    10.00 sec
   Percent in Steady State     :     0.00
-  Average Iterations per Step :     1.08
+  Average Iterations per Step :     1.09
   Percent Not Converging      :     0.00
   
   
@@ -156,6 +156,6 @@
   No conduits were surcharged.
   
 
-  Analysis begun on:  Wed Jun 10 16:32:05 2020
-  Analysis ended on:  Wed Jun 10 16:32:05 2020
+  Analysis begun on:  Fri Oct 16 13:16:00 2020
+  Analysis ended on:  Fri Oct 16 13:16:00 2020
   Total elapsed time: < 1 sec

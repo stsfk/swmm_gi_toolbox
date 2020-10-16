@@ -9,7 +9,7 @@ knit: (function(input_file, encoding) {
 
 ---
 
-The theory behind the toolbox can be found in the paper, *"Incorporating External Green Infrastructure Models into Storm Water Management Model (SWMM) Simulations Using Interface Files"*. 
+The theory behind the toolbox can be found in the paper, [*"Incorporating External Green Infrastructure Models into Storm Water Management Model (SWMM) Simulations Using Interface Files"*](https://doi.org/10.1111/1752-1688.12883). 
 
 Visit this [GitHub repository](https://github.com/stsfk/swmm_gi_toolbox) for more information. Any questions, comments, and suggestions are welcomed.
 
