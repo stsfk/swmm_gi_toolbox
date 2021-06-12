@@ -56,7 +56,7 @@ The file is named as *gi_plan.csv*, it contains the following columns, (1) inflo
 
 **Required columns**:
 
-1. *inflow_path*: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM. It can be either [absolute path of relative path](https://stackoverflow.com/questions/36834767/how-to-use-rstudio-relative-paths) .
+1. *inflow_path*: the path of the file that stores the outflow hydrograph from GI. The hydrograph will be used as input flows to SWMM. It can be either [absolute path or relative path](https://stackoverflow.com/questions/36834767/how-to-use-rstudio-relative-paths) .
 2. *outlet*: the node or the subcatchment that receives the inflow. *0* means the same outlet as the subcatchment is used.
 3. *subcatchment_name*: the name of the subcatchment, where GIs are installed.
 4. *per_area_rep*: pervious area represented by the inflow hydrograph, i.e., the pervious area modeled externally.
